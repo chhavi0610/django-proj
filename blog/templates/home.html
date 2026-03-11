@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content%}
+
+<h2> List of different blogs are-</h2>
+     
+    {%for post in posts%}
+    <h3> {{post.title}}</h3>
+    <p>{{post.content}}</p>
+
+
+<p><b>By {{ post.author.username }}</b></p>
+
+    <hr>
+     {% endfor %}
+     {% endblock %}
+  
+</body>
+</html>

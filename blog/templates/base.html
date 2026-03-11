@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BLOG SITE</title>
+
+    <style>
+        body{
+            font-family: Arial;
+            margin:40px;
+        }
+
+        h1{
+            color: darkblue;
+        }
+
+        nav a{
+            margin-right:10px;
+        }
+
+        .message{
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>THE BLOG WEBSITE</h1>
+
+<nav>
+<a href="/">Home</a>
+<a href="/about/">About</a>
+<a href="/contact/">Contact</a>
+</nav>
+
+<hr>
+
+{% if user.is_authenticated %}
+    <p>Welcome {{ user.username }}</p>
+    <a href="/create/">Create Post</a>
+
+    <a href="/logout/">Logout</a>
+{% else %}
+    <a href="/login/">Login</a>
+    <a href="/signup/">Signup</a>
+{% endif %}
+
+{% for post in posts %}
+
+{% if user == post.author %}
+    <a href="{% url 'edit_post' post.id %}">Edit</a>
+    <a href="{% url 'delete_post' post.id %}">Delete</a>
+
+{% endif %}
+
+
+
+{% endfor %}
+<br><br>
+
+{% if messages %}
+    {% for message in messages %}
+        <p class="message">{{ message }}</p>
+    {% endfor %}
+{% endif %}
+
+
+
+{% block content %}
+{% endblock %}
+
+<hr>
+
+</body>
+</html>

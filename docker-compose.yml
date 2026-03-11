@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  web:
+    build: . 
+    container_name: django-app
+    command: gunicorn djangoproj.wsgi:application --bind 0.0.0.0:8000
+    ports:
+        - "8000:8000"
+
+    depends_on:
+        - redis
+        - db
+
+  
+  redis:
+    image: redis:7
+    container_name: redis_cache
+
+
+  db:
+    image: postgres:15
+    container_name: postgres_django_db
+    environment:
+         POSTGRES_DB: ${POSTGRES_DB}
+         POSTGRES_USER: ${POSTGRES_USER}
+         POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
