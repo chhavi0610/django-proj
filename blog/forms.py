@@ -12,7 +12,7 @@ class PostForm(forms.ModelForm):
 
         title = self.cleaned_data.get("title")
 
-        if len(title) < 5:
-            raise forms.ValidationError("Title must be at least 5 characters")
+        if len(title) < 6:
+            raise forms.ValidationError("Title must be at least 6 characters")
 
         return title
