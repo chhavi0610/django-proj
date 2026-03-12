@@ -39,5 +39,5 @@ jobs:
               run: python manage.py test
 
             - name: Build Docker Image
-              run: docker build -t djano-blog .
+              run: docker build -t djano-app .
 
