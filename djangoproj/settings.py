@@ -80,22 +80,26 @@ WSGI_APPLICATION = 'djangoproj.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "django_db",
-        "USER": "postgres",
-        "PASSWORD": "newpassword",
-        "HOST": "db",
-        "PORT": "5432",
-        
-    },
-
-     "default": dj_database_url.config(
-        default=os.getenv("DATABASE_URL")
-    )
-}
+if DATABASE_URL:
+    DATABASES = {
+        "default": dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600
+        )
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "django_db",
+            "USER": "postgres",
+            "PASSWORD": "newpassword",
+            "HOST": "localhost",
+            "PORT": "5432",
+        }
+    }
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
@@ -147,7 +151,7 @@ REST_FRAMEWORK = {
  'PAGE_SIZE': 10
 }
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
 
@@ -162,3 +166,4 @@ CACHES = {
   }
  }
 }
+
