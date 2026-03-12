@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD gunicorn djangoproj.wsgi:application --bind 0.0.0.0:$PORT
+CMD python manage.py migrate && gunicorn djangoproj.wsgi:application --bind 0.0.0.0:$PORT
