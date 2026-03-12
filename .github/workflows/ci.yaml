@@ -31,6 +31,13 @@ jobs:
             - name: Start containers
               run: docker compose up -d
               
+            
+            - name: Wait for DB
+              run: |
+                    until docker compose exec -T db pg_isready -U postgres; do
+                    echo "Waiting for postgres..."
+                    sleep 2
+                    done
             - name: Run Migrations
               run: |
                   docker compose exec -T web python manage.py migrate
